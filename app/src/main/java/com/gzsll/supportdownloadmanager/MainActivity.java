@@ -1,4 +1,4 @@
-package com.tongbu.supportdownloadmanager;
+package com.gzsll.supportdownloadmanager;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -34,10 +34,9 @@ public class MainActivity extends Activity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(com.tongbu.supportdownloadmanager.R.layout.activity_main);
 
-        mDownloadManager = new SupportDownloadManager(getContentResolver(),
-                getPackageName());
+        mDownloadManager = new SupportDownloadManager(this);
         buildComponents();
         startDownloadService();
 
@@ -60,9 +59,9 @@ public class MainActivity extends Activity implements
     }
 
     private void buildComponents() {
-        etUrl = (EditText) findViewById(R.id.etUrl);
-        btStart = (Button) findViewById(R.id.btStart);
-        btShowList = (Button) findViewById(R.id.btShowList);
+        etUrl = (EditText) findViewById(com.tongbu.supportdownloadmanager.R.id.etUrl);
+        btStart = (Button) findViewById(com.tongbu.supportdownloadmanager.R.id.btStart);
+        btShowList = (Button) findViewById(com.tongbu.supportdownloadmanager.R.id.btShowList);
 
         btStart.setOnClickListener(this);
         btShowList.setOnClickListener(this);
@@ -80,10 +79,10 @@ public class MainActivity extends Activity implements
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.btStart:
+            case com.tongbu.supportdownloadmanager.R.id.btStart:
                 startDownload();
                 break;
-            case R.id.btShowList:
+            case com.tongbu.supportdownloadmanager.R.id.btShowList:
                 showDownloadList();
                 break;
             default:

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tongbu.supportdownloadmanager;
+package com.gzsll.supportdownloadmanager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -46,7 +46,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gzsll.downloads.SupportDownloadManager;
-import com.tongbu.supportdownloadmanager.DownloadItem.DownloadSelectListener;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -59,7 +58,7 @@ import java.util.Set;
  * View showing a list of all downloads the Download Manager knows about.
  */
 public class TaskListActivity extends Activity implements OnChildClickListener,
-        OnItemClickListener, DownloadSelectListener, OnClickListener,
+        OnItemClickListener, DownloadItem.DownloadSelectListener, OnClickListener,
         OnCancelListener {
     private static final String LOG_TAG = "DownloadList";
 
@@ -119,8 +118,7 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
         super.onCreate(icicle);
         setupViews();
 
-        mDownloadManager = new SupportDownloadManager(getContentResolver(),
-                getPackageName());
+        mDownloadManager = new SupportDownloadManager(this);
         mDownloadManager.setAccessAllDownloads(true);
         SupportDownloadManager.Query baseQuery = new SupportDownloadManager.Query()
                 .setOnlyIncludeVisibleInDownloadsUi(true);
@@ -177,20 +175,20 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
     }
 
     private void setupViews() {
-        setContentView(R.layout.download_list);
-        setTitle(getText(R.string.download_title));
+        setContentView(com.tongbu.supportdownloadmanager.R.layout.download_list);
+        setTitle(getText(com.tongbu.supportdownloadmanager.R.string.download_title));
 
-        mDateOrderedListView = (ExpandableListView) findViewById(R.id.date_ordered_list);
+        mDateOrderedListView = (ExpandableListView) findViewById(com.tongbu.supportdownloadmanager.R.id.date_ordered_list);
         mDateOrderedListView.setOnChildClickListener(this);
-        mSizeOrderedListView = (ListView) findViewById(R.id.size_ordered_list);
+        mSizeOrderedListView = (ListView) findViewById(com.tongbu.supportdownloadmanager.R.id.size_ordered_list);
         mSizeOrderedListView.setOnItemClickListener(this);
-        mEmptyView = findViewById(R.id.empty);
+        mEmptyView = findViewById(com.tongbu.supportdownloadmanager.R.id.empty);
 
-        mSelectionMenuView = (ViewGroup) findViewById(R.id.selection_menu);
-        mSelectionDeleteButton = (Button) findViewById(R.id.selection_delete);
+        mSelectionMenuView = (ViewGroup) findViewById(com.tongbu.supportdownloadmanager.R.id.selection_menu);
+        mSelectionDeleteButton = (Button) findViewById(com.tongbu.supportdownloadmanager.R.id.selection_delete);
         mSelectionDeleteButton.setOnClickListener(this);
 
-        ((Button) findViewById(R.id.deselect_all)).setOnClickListener(this);
+        ((Button) findViewById(com.tongbu.supportdownloadmanager.R.id.deselect_all)).setOnClickListener(this);
     }
 
     private boolean haveCursors() {
@@ -248,16 +246,16 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
     public boolean onCreateOptionsMenu(Menu menu) {
         if (haveCursors()) {
             MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.download_ui_menu, menu);
+            inflater.inflate(com.tongbu.supportdownloadmanager.R.menu.download_ui_menu, menu);
         }
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.download_menu_sort_by_size).setVisible(
+        menu.findItem(com.tongbu.supportdownloadmanager.R.id.download_menu_sort_by_size).setVisible(
                 !mIsSortedBySize);
-        menu.findItem(R.id.download_menu_sort_by_date).setVisible(
+        menu.findItem(com.tongbu.supportdownloadmanager.R.id.download_menu_sort_by_date).setVisible(
                 mIsSortedBySize);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -265,11 +263,11 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.download_menu_sort_by_size:
+            case com.tongbu.supportdownloadmanager.R.id.download_menu_sort_by_size:
                 mIsSortedBySize = true;
                 chooseListToShow();
                 return true;
-            case R.id.download_menu_sort_by_date:
+            case com.tongbu.supportdownloadmanager.R.id.download_menu_sort_by_date:
                 mIsSortedBySize = false;
                 chooseListToShow();
                 return true;
@@ -373,7 +371,7 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
                     "Failed to open download " + cursor.getLong(mIdColumnId),
                     exc);
             showFailedDialog(cursor.getLong(mIdColumnId),
-                    getString(R.string.dialog_file_missing_body));
+                    getString(com.tongbu.supportdownloadmanager.R.string.dialog_file_missing_body));
             return;
         } catch (IOException exc) {
             // close() failed, not a problem
@@ -386,7 +384,7 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException ex) {
-            Toast.makeText(this, R.string.download_no_application_title,
+            Toast.makeText(this, com.tongbu.supportdownloadmanager.R.string.download_no_application_title,
                     Toast.LENGTH_LONG).show();
         }
     }
@@ -403,10 +401,10 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
                 if (isPausedForWifi(cursor)) {
                     mQueuedDownloadId = id;
                     mQueuedDialog = new AlertDialog.Builder(this)
-                            .setTitle(R.string.dialog_title_queued_body)
-                            .setMessage(R.string.dialog_queued_body)
-                            .setPositiveButton(R.string.keep_queued_download, null)
-                            .setNegativeButton(R.string.remove_download,
+                            .setTitle(com.tongbu.supportdownloadmanager.R.string.dialog_title_queued_body)
+                            .setMessage(com.tongbu.supportdownloadmanager.R.string.dialog_queued_body)
+                            .setPositiveButton(com.tongbu.supportdownloadmanager.R.string.keep_queued_download, null)
+                            .setNegativeButton(com.tongbu.supportdownloadmanager.R.string.remove_download,
                                     getDeleteClickHandler(id))
                             .setOnCancelListener(this).show();
                 } else {
@@ -432,23 +430,23 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
         switch (cursor.getInt(mReasonColumndId)) {
             case SupportDownloadManager.ERROR_FILE_ALREADY_EXISTS:
                 if (isOnExternalStorage(cursor)) {
-                    return getString(R.string.dialog_file_already_exists);
+                    return getString(com.tongbu.supportdownloadmanager.R.string.dialog_file_already_exists);
                 } else {
                     return getUnknownErrorMessage();
                 }
 
             case SupportDownloadManager.ERROR_INSUFFICIENT_SPACE:
                 if (isOnExternalStorage(cursor)) {
-                    return getString(R.string.dialog_insufficient_space_on_external);
+                    return getString(com.tongbu.supportdownloadmanager.R.string.dialog_insufficient_space_on_external);
                 } else {
-                    return getString(R.string.dialog_insufficient_space_on_cache);
+                    return getString(com.tongbu.supportdownloadmanager.R.string.dialog_insufficient_space_on_cache);
                 }
 
             case SupportDownloadManager.ERROR_DEVICE_NOT_FOUND:
-                return getString(R.string.dialog_media_not_found);
+                return getString(com.tongbu.supportdownloadmanager.R.string.dialog_media_not_found);
 
             case SupportDownloadManager.ERROR_CANNOT_RESUME:
-                return getString(R.string.dialog_cannot_resume);
+                return getString(com.tongbu.supportdownloadmanager.R.string.dialog_cannot_resume);
 
             default:
                 return getUnknownErrorMessage();
@@ -471,36 +469,36 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
     }
 
     private String getUnknownErrorMessage() {
-        return getString(R.string.dialog_failed_body);
+        return getString(com.tongbu.supportdownloadmanager.R.string.dialog_failed_body);
     }
 
     private void showRunningDialog(long downloadId) {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.download_running)
-                .setMessage(R.string.dialog_running_body)
-                .setNegativeButton(R.string.cancel_running_download,
+                .setTitle(com.tongbu.supportdownloadmanager.R.string.download_running)
+                .setMessage(com.tongbu.supportdownloadmanager.R.string.dialog_running_body)
+                .setNegativeButton(com.tongbu.supportdownloadmanager.R.string.cancel_running_download,
                         getDeleteClickHandler(downloadId))
-                .setPositiveButton(R.string.pause_download,
+                .setPositiveButton(com.tongbu.supportdownloadmanager.R.string.pause_download,
                         getPauseClickHandler(downloadId)).show();
     }
 
     private void showPausedDialog(long downloadId) {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.download_queued)
-                .setMessage(R.string.dialog_paused_body)
-                .setNegativeButton(R.string.delete_download,
+                .setTitle(com.tongbu.supportdownloadmanager.R.string.download_queued)
+                .setMessage(com.tongbu.supportdownloadmanager.R.string.dialog_paused_body)
+                .setNegativeButton(com.tongbu.supportdownloadmanager.R.string.delete_download,
                         getDeleteClickHandler(downloadId))
-                .setPositiveButton(R.string.resume_download,
+                .setPositiveButton(com.tongbu.supportdownloadmanager.R.string.resume_download,
                         getResumeClickHandler(downloadId)).show();
     }
 
     private void showFailedDialog(long downloadId, String dialogBody) {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_title_not_available)
+                .setTitle(com.tongbu.supportdownloadmanager.R.string.dialog_title_not_available)
                 .setMessage(dialogBody)
-                .setNegativeButton(R.string.delete_download,
+                .setNegativeButton(com.tongbu.supportdownloadmanager.R.string.delete_download,
                         getDeleteClickHandler(downloadId))
-                .setPositiveButton(R.string.retry_download,
+                .setPositiveButton(com.tongbu.supportdownloadmanager.R.string.retry_download,
                         getRestartClickHandler(downloadId)).show();
     }
 
@@ -542,13 +540,13 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
                 // show menu
                 mSelectionMenuView.setVisibility(View.VISIBLE);
                 mSelectionMenuView.startAnimation(AnimationUtils.loadAnimation(
-                        this, R.anim.footer_appear));
+                        this, com.tongbu.supportdownloadmanager.R.anim.footer_appear));
             }
         } else if (!shouldBeVisible && isVisible) {
             // hide menu
             mSelectionMenuView.setVisibility(View.GONE);
             mSelectionMenuView.startAnimation(AnimationUtils.loadAnimation(
-                    this, R.anim.footer_disappear));
+                    this, com.tongbu.supportdownloadmanager.R.anim.footer_disappear));
         }
     }
 
@@ -556,7 +554,7 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
      * Set up the contents of the selection menu based on the current selection.
      */
     private void updateSelectionMenu() {
-        int deleteButtonStringId = R.string.delete_download;
+        int deleteButtonStringId = com.tongbu.supportdownloadmanager.R.string.delete_download;
         if (mSelectedIds.size() == 1) {
             Cursor cursor = mDownloadManager.query(new SupportDownloadManager.Query()
                     .setFilterById(mSelectedIds.iterator().next()));
@@ -564,16 +562,16 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
                 cursor.moveToFirst();
                 switch (cursor.getInt(mStatusColumnId)) {
                     case SupportDownloadManager.STATUS_FAILED:
-                        deleteButtonStringId = R.string.delete_download;
+                        deleteButtonStringId = com.tongbu.supportdownloadmanager.R.string.delete_download;
                         break;
 
                     case SupportDownloadManager.STATUS_PENDING:
-                        deleteButtonStringId = R.string.remove_download;
+                        deleteButtonStringId = com.tongbu.supportdownloadmanager.R.string.remove_download;
                         break;
 
                     case SupportDownloadManager.STATUS_PAUSED:
                     case SupportDownloadManager.STATUS_RUNNING:
-                        deleteButtonStringId = R.string.cancel_running_download;
+                        deleteButtonStringId = com.tongbu.supportdownloadmanager.R.string.cancel_running_download;
                         break;
                 }
             } finally {
@@ -586,14 +584,14 @@ public class TaskListActivity extends Activity implements OnChildClickListener,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.selection_delete:
+            case com.tongbu.supportdownloadmanager.R.id.selection_delete:
                 for (Long downloadId : mSelectedIds) {
                     deleteDownload(downloadId);
                 }
                 clearSelection();
                 break;
 
-            case R.id.deselect_all:
+            case com.tongbu.supportdownloadmanager.R.id.deselect_all:
                 clearSelection();
                 break;
         }

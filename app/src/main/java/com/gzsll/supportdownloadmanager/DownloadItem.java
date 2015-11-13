@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tongbu.supportdownloadmanager;
+package com.gzsll.supportdownloadmanager;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -59,14 +59,14 @@ public class DownloadItem extends RelativeLayout {
 
     private void initialize() {
         if (CHECKMARK_AREA == -1) {
-            CHECKMARK_AREA = getResources().getDimensionPixelSize(R.dimen.checkmark_area);
+            CHECKMARK_AREA = getResources().getDimensionPixelSize(com.tongbu.supportdownloadmanager.R.dimen.checkmark_area);
         }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mCheckBox = (CheckBox) findViewById(R.id.download_checkbox);
+        mCheckBox = (CheckBox) findViewById(com.tongbu.supportdownloadmanager.R.id.download_checkbox);
     }
 
     public void setDownloadId(long downloadId) {

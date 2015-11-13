@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tongbu.supportdownloadmanager;
+package com.gzsll.supportdownloadmanager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +35,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gzsll.downloads.SupportDownloadManager;
-import com.tongbu.supportdownloadmanager.DownloadItem.DownloadSelectListener;
+import com.gzsll.supportdownloadmanager.DownloadItem.DownloadSelectListener;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -93,7 +93,7 @@ public class DownloadAdapter extends CursorAdapter {
 
     public View newView() {
         DownloadItem view = (DownloadItem) LayoutInflater.from(mContext)
-                .inflate(R.layout.download_list_item, null);
+                .inflate(com.tongbu.supportdownloadmanager.R.layout.download_list_item, null);
         view.setSelectListener(mDownloadSelectionListener);
         return view;
     }
@@ -115,15 +115,15 @@ public class DownloadAdapter extends CursorAdapter {
         int status = mCursor.getInt(mStatusColumnId);
 
         if (title.length() == 0) {
-            title = mResources.getString(R.string.missing_title);
+            title = mResources.getString(com.tongbu.supportdownloadmanager.R.string.missing_title);
         }
-        setTextForView(convertView, R.id.download_title, title);
+        setTextForView(convertView, com.tongbu.supportdownloadmanager.R.id.download_title, title);
 
         int progress = getProgressValue(totalBytes, currentBytes);
 
         boolean indeterminate = status == SupportDownloadManager.STATUS_PENDING;
         ProgressBar progressBar = (ProgressBar) convertView
-                .findViewById(R.id.download_progress);
+                .findViewById(com.tongbu.supportdownloadmanager.R.id.download_progress);
         progressBar.setIndeterminate(indeterminate);
         if (!indeterminate) {
             progressBar.setProgress(progress);
@@ -135,13 +135,13 @@ public class DownloadAdapter extends CursorAdapter {
             progressBar.setVisibility(View.VISIBLE);
         }
 
-        setTextForView(convertView, R.id.size_text, getSizeText(totalBytes));
-        setTextForView(convertView, R.id.status_text,
+        setTextForView(convertView, com.tongbu.supportdownloadmanager.R.id.size_text, getSizeText(totalBytes));
+        setTextForView(convertView, com.tongbu.supportdownloadmanager.R.id.status_text,
                 mResources.getString(getStatusStringId(status)));
-        setTextForView(convertView, R.id.last_modified_date, getDateString());
+        setTextForView(convertView, com.tongbu.supportdownloadmanager.R.id.last_modified_date, getDateString());
 
         CheckBox checkBox = (CheckBox) convertView
-                .findViewById(R.id.download_checkbox);
+                .findViewById(com.tongbu.supportdownloadmanager.R.id.download_checkbox);
         checkBox.setChecked(mDownloadSelectionListener
                 .isDownloadSelected(downloadId));
     }
@@ -182,21 +182,21 @@ public class DownloadAdapter extends CursorAdapter {
     private int getStatusStringId(int status) {
         switch (status) {
             case SupportDownloadManager.STATUS_FAILED:
-                return R.string.download_error;
+                return com.tongbu.supportdownloadmanager.R.string.download_error;
 
             case SupportDownloadManager.STATUS_SUCCESSFUL:
-                return R.string.download_success;
+                return com.tongbu.supportdownloadmanager.R.string.download_success;
 
             case SupportDownloadManager.STATUS_PENDING:
-                return R.string.download_pending;
+                return com.tongbu.supportdownloadmanager.R.string.download_pending;
             case SupportDownloadManager.STATUS_RUNNING:
-                return R.string.download_running;
+                return com.tongbu.supportdownloadmanager.R.string.download_running;
 
             case SupportDownloadManager.STATUS_PAUSED:
                 if (mCursor.getInt(mReasonColumnId) == SupportDownloadManager.PAUSED_QUEUED_FOR_WIFI) {
-                    return R.string.download_queued;
+                    return com.tongbu.supportdownloadmanager.R.string.download_queued;
                 } else {
-                    return R.string.download_paused;
+                    return com.tongbu.supportdownloadmanager.R.string.download_paused;
                 }
         }
         throw new IllegalStateException("Unknown status: "
@@ -206,7 +206,7 @@ public class DownloadAdapter extends CursorAdapter {
     private void retrieveAndSetIcon(View convertView) {
         String mediaType = mCursor.getString(mMediaTypeColumnId);
         ImageView iconView = (ImageView) convertView
-                .findViewById(R.id.download_icon);
+                .findViewById(com.tongbu.supportdownloadmanager.R.id.download_icon);
         iconView.setVisibility(View.INVISIBLE);
 
         if (mediaType == null) {
@@ -220,7 +220,7 @@ public class DownloadAdapter extends CursorAdapter {
                 PackageManager.MATCH_DEFAULT_ONLY);
         if (list.size() == 0) {
             // no icon found for this mediatype. use "unknown" icon
-            iconView.setImageResource(R.drawable.ic_download_misc_file_type);
+            iconView.setImageResource(com.tongbu.supportdownloadmanager.R.drawable.ic_download_misc_file_type);
         } else {
             Drawable icon = list.get(0).activityInfo.loadIcon(pm);
             iconView.setImageDrawable(icon);

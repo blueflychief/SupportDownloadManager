@@ -15,7 +15,7 @@
  */
 
 
-package com.tongbu.supportdownloadmanager;
+package com.gzsll.supportdownloadmanager;
 
 
 import android.content.Context;
@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.gzsll.downloads.SupportDownloadManager;
-import com.tongbu.supportdownloadmanager.DownloadItem.DownloadSelectListener;
+import com.gzsll.supportdownloadmanager.DownloadItem.DownloadSelectListener;
 /**
  * Adapter for a date-sorted list of downloads.  Delegates all the real work to
  * {@link DownloadAdapter}.

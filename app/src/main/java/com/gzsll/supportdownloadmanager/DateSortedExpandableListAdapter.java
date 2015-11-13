@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tongbu.supportdownloadmanager;
+package com.gzsll.supportdownloadmanager;
 
 import android.content.Context;
 import android.database.ContentObserver;
@@ -274,7 +274,7 @@ public class DateSortedExpandableListAdapter implements ExpandableListAdapter {
         TextView item;
         if (null == convertView || !(convertView instanceof TextView)) {
             LayoutInflater factory = LayoutInflater.from(mContext);
-            item = (TextView) factory.inflate(R.layout.list_group_header, null);
+            item = (TextView) factory.inflate(com.tongbu.supportdownloadmanager.R.layout.list_group_header, null);
         } else {
             item = (TextView) convertView;
         }

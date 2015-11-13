@@ -17,7 +17,7 @@
 */
 -->
 
-<com.tongbu.supportdownloadmanager.DownloadItem xmlns:android="http://schemas.android.com/apk/res/android"
+<com.gzsll.supportdownloadmanager.DownloadItem xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
@@ -93,4 +93,4 @@
         android:paddingLeft="15dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-</com.tongbu.supportdownloadmanager.DownloadItem>
+</com.gzsll.supportdownloadmanager.DownloadItem>

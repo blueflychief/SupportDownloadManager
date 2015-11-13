@@ -769,9 +769,9 @@ public class SupportDownloadManager {
     private String mPackageName;
     private Uri mBaseUri = Downloads.CONTENT_URI;
 
-    public SupportDownloadManager(ContentResolver resolver, String packageName) {
-        mResolver = resolver;
-        mPackageName = packageName;
+    public SupportDownloadManager(Context context) {
+        mResolver = context.getContentResolver();
+        mPackageName = context.getPackageName();
     }
 
 
