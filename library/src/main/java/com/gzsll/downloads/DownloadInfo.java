@@ -258,7 +258,7 @@ public class DownloadInfo {
         return Collections.unmodifiableList(mRequestHeaders);
     }
 
-    public void sendIntentIfRequested() {
+    public void sendIntentIfRequested(int status) {
         if (mPackage == null) {
             return;
         }
@@ -268,6 +268,7 @@ public class DownloadInfo {
             intent = new Intent(SupportDownloadManager.ACTION_DOWNLOAD_COMPLETE);
             intent.setPackage(mPackage);
             intent.putExtra(SupportDownloadManager.EXTRA_DOWNLOAD_ID, mId);
+            intent.putExtra(SupportDownloadManager.EXTRA_DOWNLOAD_STATUS, status);
         } else { // legacy behavior
             if (mClass == null) {
                 return;

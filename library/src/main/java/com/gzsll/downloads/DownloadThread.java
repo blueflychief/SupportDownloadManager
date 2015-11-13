@@ -870,7 +870,7 @@ public class DownloadThread extends Thread {
         notifyThroughDatabase(status, countRetry, retryAfter, gotData,
                 filename, uri, mimeType);
         if (Downloads.isStatusCompleted(status)) {
-            mInfo.sendIntentIfRequested();
+            mInfo.sendIntentIfRequested(status);
         }
     }
 

@@ -275,6 +275,7 @@ public class SupportDownloadManager {
      * indicating the ID (as a long) of the download that just completed.
      */
     public static final String EXTRA_DOWNLOAD_ID = "extra_download_id";
+    public static final String EXTRA_DOWNLOAD_STATUS = "extra_download_status";
 
     // this array must contain all public columns
     private static final String[] COLUMNS = new String[]{COLUMN_ID,
@@ -1235,10 +1236,10 @@ public class SupportDownloadManager {
      * 获取下载状态及进度
      *
      * @param downloadId id
-     * @return int[]数组，0 已下载字节  1 总共字节数 2 下载状态
+     * @return int[]数组，0 已下载字节  1 总共字节数 2 下载状态 3 下载速度  4 剩余时间
      */
     public int[] getBytesAndStatus(long downloadId) {
-        int[] bytesAndStatus = new int[]{-1, -1, 0};
+        int[] bytesAndStatus = new int[]{-1, -1, 0, 0, -1};
         Query query = new Query().setFilterById(downloadId);
         Cursor c = null;
         try {
@@ -1247,6 +1248,8 @@ public class SupportDownloadManager {
                 bytesAndStatus[0] = c.getInt(c.getColumnIndexOrThrow(SupportDownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
                 bytesAndStatus[1] = c.getInt(c.getColumnIndexOrThrow(SupportDownloadManager.COLUMN_TOTAL_SIZE_BYTES));
                 bytesAndStatus[2] = c.getInt(c.getColumnIndex(SupportDownloadManager.COLUMN_STATUS));
+                bytesAndStatus[3] = c.getInt(c.getColumnIndexOrThrow(Downloads.COLUMN_CURRENT_SPEED));
+                bytesAndStatus[4] = c.getInt(c.getColumnIndexOrThrow(Downloads.COLUMN_TIME_REMAINING));
             }
         } finally {
             if (c != null) {
