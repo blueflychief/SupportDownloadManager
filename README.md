@@ -1,8 +1,11 @@
 `SupportDownloadManager`由2.3.7版本源码修改，添加一些常用的功能，支持2.3以上版本。
 
 >替换HttpClient为[okhttp](https://github.com/square/okhttp "okhttp")
+
 >添加最大并行下载任务设置,超过数量的任务会被修改为`pending`状态，修改`RealSystemFacade`中`DOWNLOAD_MAX_COUNT`，默认为2
+
 >支持断点续传，支持暂停任务、继续任务、重新开始任务
+
 >添加下载速度、剩余下载时间
 
 
@@ -34,7 +37,7 @@
 
 ·注意，任务取消也有此广播，如果只需要处理下载完成，则通过状态自行判断
 
-``
+
         public void onReceive(Context context, Intent intent) {
             if (intent == null || intent.getAction() == null) {
                 return;
@@ -45,7 +48,7 @@
                 long downloadId = intent.getLongExtra(SupportDownloadManager.EXTRA_DOWNLOAD_ID, -1);
                 int status = intent.getIntExtra(SupportDownloadManager.EXTRA_DOWNLOAD_STATUS, -1);
             }
-``
+
 
 >点击通知栏监听
 
@@ -57,4 +60,5 @@
 ``
  public int[] getBytesAndStatus(long downloadId) 
 ``
-        
+       
+> Demo修改自[DownloadProvider](https://github.com/yxl/DownloadProvider "DownloadProvider")
